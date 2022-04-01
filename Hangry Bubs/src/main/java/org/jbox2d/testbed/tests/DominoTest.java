@@ -99,7 +99,7 @@ public class DominoTest extends TestbedTest {
          fd.density = 25.0f;
          bd = new BodyDef();
          bd.type = BodyType.DYNAMIC;
-         System.out.println(friction); 
+         System.out.println(friction);  
          fd.friction = friction;
          bd.position = new Vec2(1.5f, 1.2f);
          bd.angle = 0;
