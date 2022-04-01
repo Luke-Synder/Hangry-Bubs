@@ -52,7 +52,7 @@ public class DominoTest extends TestbedTest {
       fd.shape = sd;
 
       BodyDef bd = new BodyDef();
-      bd.position = new Vec2(0.0f, -10.0f);
+      bd.position = new Vec2(0.0f, -10.0f); 
       getWorld().createBody(bd).createFixture(fd);
 
     }
