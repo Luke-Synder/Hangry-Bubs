@@ -55,7 +55,7 @@ public class DominoTest extends TestbedTest {
       bd.position = new Vec2(0.0f, -10.0f);
       getWorld().createBody(bd).createFixture(fd);
 
-    } 
+    }
 
     { // Platforms
     /*
@@ -74,22 +74,94 @@ public class DominoTest extends TestbedTest {
     }
 
     {
+    	//bd.angle = (float)Math.PI/2;
     	 FixtureDef fd = new FixtureDef();
          PolygonShape sd = new PolygonShape();
-         sd.setAsBox(.5f, 2f);
+         sd.setAsBox(.25f, 2f);
          fd.shape = sd;
          fd.density = 25.0f;
-
          BodyDef bd = new BodyDef();
          bd.type = BodyType.DYNAMIC;
          float friction = .5f;
          System.out.println(friction);
          int numPerRow = 10;
          fd.friction = friction;
-         bd.position = new Vec2(0, 1.2f);
-         //bd.angle = (float)Math.PI/2;
+         bd.position = new Vec2(-1.5f, 1.2f);
          bd.angle = 0;
          Body myBody = getWorld().createBody(bd);
+         myBody.createFixture(fd);
+         
+         
+         fd = new FixtureDef();
+         sd = new PolygonShape();
+         sd.setAsBox(.25f, 2f);
+         fd.shape = sd;
+         fd.density = 25.0f;
+         bd = new BodyDef();
+         bd.type = BodyType.DYNAMIC;
+         System.out.println(friction);
+         fd.friction = friction;
+         bd.position = new Vec2(1.5f, 1.2f);
+         bd.angle = 0;
+         myBody = getWorld().createBody(bd);
+         myBody.createFixture(fd);
+         
+         
+         fd = new FixtureDef();
+         sd = new PolygonShape();
+         sd.setAsBox(.25f, 2f);
+         fd.shape = sd;
+         fd.density = 25.0f;
+         bd = new BodyDef();
+         bd.type = BodyType.DYNAMIC;
+         System.out.println(friction);
+         fd.friction = friction;
+         bd.position = new Vec2(0, 6.2f);
+         bd.angle = (float)Math.PI/2;
+         myBody = getWorld().createBody(bd);
+         myBody.createFixture(fd);
+         
+         fd = new FixtureDef();
+         sd = new PolygonShape();
+         sd.setAsBox(.25f, 2f);
+         fd.shape = sd;
+         fd.density = 25.0f;
+         bd = new BodyDef();
+         bd.type = BodyType.DYNAMIC;
+         System.out.println(friction);
+         fd.friction = friction;
+         bd.position = new Vec2(.5f, 6.2f);
+         bd.angle = 0;
+         myBody = getWorld().createBody(bd);
+         myBody.createFixture(fd);
+         
+         
+         fd = new FixtureDef();
+         sd = new PolygonShape();
+         sd.setAsBox(.25f, 2f);
+         fd.shape = sd;
+         fd.density = 25.0f;
+         bd = new BodyDef();
+         bd.type = BodyType.DYNAMIC;
+         System.out.println(friction);
+         fd.friction = friction;
+         bd.position = new Vec2(-.5f, 6.2f);
+         bd.angle = 0;
+         myBody = getWorld().createBody(bd);
+         myBody.createFixture(fd);
+         
+         fd = new FixtureDef();
+         sd = new PolygonShape();
+         sd.setAsBox(.25f, 2f);
+         fd.shape = sd;
+         fd.density = 25.0f;
+         bd = new BodyDef();
+         bd.type = BodyType.DYNAMIC;
+         System.out.println(friction);
+         fd.friction = friction;
+         bd.position = new Vec2(0, 11.2f);
+         bd.angle = (float)Math.PI/2;
+         myBody = getWorld().createBody(bd);
          myBody.createFixture(fd);
     	/*
       FixtureDef fd = new FixtureDef();
@@ -146,7 +218,7 @@ public class DominoTest extends TestbedTest {
         }
       }
       */
-    }
+    } 
   }
 
   @Override
