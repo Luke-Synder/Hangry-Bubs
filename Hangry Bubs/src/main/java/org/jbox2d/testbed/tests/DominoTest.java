@@ -231,7 +231,7 @@ public class DominoTest extends TestbedTest {
       PolygonShape sd = new PolygonShape();
       sd.setAsBox(thickness, height);
       fd.shape = sd;
-      fd.density = 50.0f;
+      fd.density = 100.0f;
       BodyDef bd = new BodyDef();
       bd.type = BodyType.DYNAMIC;
       float friction = .5f;
@@ -247,7 +247,7 @@ public class DominoTest extends TestbedTest {
       sd = new PolygonShape();
       sd.setAsBox(thickness, height);
       fd.shape = sd;
-      fd.density = 50.0f;
+      fd.density = 100.0f;
       bd = new BodyDef();
       bd.type = BodyType.DYNAMIC;
       System.out.println(friction);
@@ -262,7 +262,7 @@ public class DominoTest extends TestbedTest {
       sd = new PolygonShape();
       sd.setAsBox(thickness, width);
       fd.shape = sd; 
-      fd.density = 50.0f;
+      fd.density = 100.0f;
       bd = new BodyDef();
       bd.type = BodyType.DYNAMIC;
       System.out.println(friction);
