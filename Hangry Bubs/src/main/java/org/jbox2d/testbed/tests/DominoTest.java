@@ -140,8 +140,8 @@ public class DominoTest extends TestbedTest  {
       
       fd = new FixtureDef();
       sd = new PolygonShape();
-      sd.setAsBox(thickness, width);
-      fd.shape = sd; 
+      sd.setAsBox(thickness, width); 
+      fd.shape = sd;  
       fd.density = 100.0f;
       bd = new BodyDef();
       bd.type = BodyType.DYNAMIC;
