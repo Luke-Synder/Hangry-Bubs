@@ -23,6 +23,7 @@
  ******************************************************************************/
 package org.jbox2d.testbed.tests;
 
+import java.awt.Graphics; 
 import java.util.Scanner;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -33,7 +34,29 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.testbed.framework.TestbedTest;
 
-public class DominoTest extends TestbedTest {
+import java.awt.Color; 
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class DominoTest extends TestbedTest  {
 
   @Override
   public boolean isSaveLoadEnabled() {
@@ -74,156 +97,13 @@ public class DominoTest extends TestbedTest {
     }
 
     {
-    	for(float j=0; j<=24; j+=6)
-	    	for(float i=-24+(j/2);i<=24-(j/2);i+=6) {
-	    		box(3.0f,3.0f,.3f,i,j+((j/3)*.3f));
+    	for(float j=0; j<=24; j+=8) {
+	    	for(float i=-24+j;i<=24-(j);i+=8) {
+	    		box(4.0f,4.0f,.3f,i,j+((j/3)*.3f));
 	    	}
-    	//bd.angle = (float)Math.PI/2;
-    	/*
-    	 FixtureDef fd = new FixtureDef();
-         PolygonShape sd = new PolygonShape();
-         sd.setAsBox(.25f, 2f);
-         fd.shape = sd;
-         fd.density = 25.0f;
-         BodyDef bd = new BodyDef();
-         bd.type = BodyType.DYNAMIC;
-         float friction = .5f;
-         System.out.println(friction);
-         int numPerRow = 10;
-         fd.friction = friction;
-         bd.position = new Vec2(-2f, 1.2f);
-         bd.angle = 0;
-         Body myBody = getWorld().createBody(bd);
-         myBody.createFixture(fd);
-         
-         
-         fd = new FixtureDef();
-         sd = new PolygonShape();
-         sd.setAsBox(.25f, 2f);
-         fd.shape = sd;
-         fd.density = 25.0f;
-         bd = new BodyDef();
-         bd.type = BodyType.DYNAMIC;
-         System.out.println(friction);
-         fd.friction = friction;
-         bd.position = new Vec2(2f, 1.2f);
-         bd.angle = 0;
-         myBody = getWorld().createBody(bd);
-         myBody.createFixture(fd);
-         
-         
-         fd = new FixtureDef();
-         sd = new PolygonShape();
-         sd.setAsBox(.25f, 3f);
-         fd.shape = sd;
-         fd.density = 25.0f;
-         bd = new BodyDef();
-         bd.type = BodyType.DYNAMIC;
-         System.out.println(friction);
-         fd.friction = friction;
-         bd.position = new Vec2(0, 4.2f);
-         bd.angle = (float)Math.PI/2;
-         myBody = getWorld().createBody(bd);
-         myBody.createFixture(fd);
-         
-         fd = new FixtureDef();
-         sd = new PolygonShape();
-         sd.setAsBox(.25f, 2f);
-         fd.shape = sd;
-         fd.density = 25.0f;
-         bd = new BodyDef();
-         bd.type = BodyType.DYNAMIC;
-         System.out.println(friction);
-         fd.friction = friction;
-         bd.position = new Vec2(1.5f, 6.2f);
-         bd.angle = 0;
-         myBody = getWorld().createBody(bd);
-         myBody.createFixture(fd);
-         
-         
-         fd = new FixtureDef();
-         sd = new PolygonShape();
-         sd.setAsBox(.25f, 2f);
-         fd.shape = sd;
-         fd.density = 25.0f;
-         bd = new BodyDef();
-         bd.type = BodyType.DYNAMIC;
-         System.out.println(friction);
-         fd.friction = friction;
-         bd.position = new Vec2(-1.5f, 6.2f);
-         bd.angle = 0;
-         myBody = getWorld().createBody(bd);
-         myBody.createFixture(fd);
-         
-         fd = new FixtureDef();
-         sd = new PolygonShape();
-         sd.setAsBox(.25f, 2f);
-         fd.shape = sd;
-         fd.density = 25.0f;
-         bd = new BodyDef();
-         bd.type = BodyType.DYNAMIC;
-         System.out.println(friction);
-         fd.friction = friction;
-         bd.position = new Vec2(0, 11.2f);
-         bd.angle = (float)Math.PI/2;
-         myBody = getWorld().createBody(bd);
-         myBody.createFixture(fd);
-         */
-    	/*
-      FixtureDef fd = new FixtureDef();
-      PolygonShape sd = new PolygonShape();
-      sd.setAsBox(.5f, 2f);
-      fd.shape = sd;
-      fd.density = 25.0f;
+    	}
 
-      BodyDef bd = new BodyDef();
-      bd.type = BodyType.DYNAMIC;
-      float friction = .5f;
-      System.out.println(friction);
-      int numPerRow = 10;
-      /*
-      Scanner sc=new Scanner(System.in);  
-      float ang = sc.nextFloat();
-      
-      for (int i = 0; i < 4; ++i) {
-    	  int n=1;
-    	  if(i%2==0) {
-    		  n=2;
-    	  }
-          for (int j = 0; j < (numPerRow*n); j++) {
-            fd.friction = friction;
-            bd.position = new Vec2(-14.75f + j * (29.5f / ((numPerRow*n) - 1)), 7.3f + 2f * i);
-            if (i%2== 0) {
-              bd.angle = 0;
-              //bd.position.x += .1f;
-            }
-            else {
-              bd.angle = (float)Math.PI/2;
-            }
-            Body myBody = getWorld().createBody(bd);
-            myBody.createFixture(fd);
-          }
-          numPerRow-=2;
-        }
-      */
-      /*
-      for (int i = 0; i < 2; ++i) {
-        for (int j = 0; j < numPerRow; j++) {
-          fd.friction = friction;
-          bd.position = new Vec2(-14.75f + j * (29.5f / (numPerRow - 1)), 7.3f + 5f * i);
-          if (i == 2 && j == 0) {
-            bd.angle = -.1f;
-            bd.position.x += .1f;
-          } else if (i == 3 && j == numPerRow - 1) {
-            bd.angle = .1f;
-            bd.position.x -= .1f;
-          } else
-            bd.angle = 90f;
-          Body myBody = getWorld().createBody(bd);
-          myBody.createFixture(fd);
-        }
-      }
-      */
+
     } 
   }
   public void box(float width, float height, float thickness, float x, float y) {
@@ -260,8 +140,8 @@ public class DominoTest extends TestbedTest {
       
       fd = new FixtureDef();
       sd = new PolygonShape();
-      sd.setAsBox(thickness, width);
-      fd.shape = sd; 
+      sd.setAsBox(thickness, width); 
+      fd.shape = sd;  
       fd.density = 100.0f;
       bd = new BodyDef();
       bd.type = BodyType.DYNAMIC;
