@@ -102,6 +102,8 @@ public class DominoTest extends TestbedTest  {
 	    		box(4.0f,4.0f,.3f,i,j+((j/3)*.3f));
 	    	}
     	}
+    	Painter p = new Painter();
+
 
 
     } 

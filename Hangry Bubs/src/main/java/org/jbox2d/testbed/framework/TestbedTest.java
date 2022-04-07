@@ -26,6 +26,7 @@
  */
 package org.jbox2d.testbed.framework;
 
+import java.awt.Graphics;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -1003,7 +1004,10 @@ public abstract class TestbedTest
   public void keyPressed(char keyCar, int keyCode) {}
 
   public void keyReleased(char keyChar, int keyCode) {}
+
+
 }
+
 
 
 class TestQueryCallback implements QueryCallback {
