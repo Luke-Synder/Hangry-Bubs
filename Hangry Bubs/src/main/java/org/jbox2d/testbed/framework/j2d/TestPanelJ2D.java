@@ -47,6 +47,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedPanel;
 import org.jbox2d.testbed.framework.TestbedTest;
+import org.jbox2d.testbed.tests.RedBird;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -183,6 +184,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     }
     dbg.setColor(Color.black);
     dbg.fillRect(0, 0, panelWidth, panelHeight);
+   
     return true;
   }
 
@@ -193,6 +195,9 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
         g.drawImage(dbImage, 0, 0, null);
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
+        System.out.println("birb");
+        RedBird rb = new RedBird(100,100);
+    	rb.paint(g);
       }
     } catch (AWTError e) {
       log.error("Graphics context error", e);
