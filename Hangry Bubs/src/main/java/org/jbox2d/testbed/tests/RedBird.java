@@ -13,7 +13,7 @@ public class RedBird{
 	private Image img; 	
 	private AffineTransform tx;
 	private double x =0,y=0;
-	private double scale =100000;
+	private double scale =.75;
 	
 	public double getX() {
 		return x; 
@@ -60,10 +60,9 @@ public class RedBird{
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
 		System.out.println("paintRedBird");
-		//Graphics2D g2 = (Graphics2D) g;
+		Graphics2D g2 = (Graphics2D) g;
 		
-		g.drawImage(img, (int)x, (int)y, null);
-
+		g2.drawImage(img, tx, null);
 		update();
 		
 	}
