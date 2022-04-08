@@ -1,5 +1,6 @@
 package org.jbox2d.testbed.tests;
 import java.awt.Graphics;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,7 +13,7 @@ public class RedBird{
 	private Image img; 	
 	private AffineTransform tx;
 	private double x =0,y=0;
-	private double scale =1000;
+	private double scale =100000;
 	
 	public double getX() {
 		return x; 
@@ -41,6 +42,7 @@ public class RedBird{
 	}
 
 	public RedBird(int x, int y) {
+		System.out.println("redBird");
 		img = getImage("/imgs/Red_Bird.png"); //load the image for Tree
 		this.x=x;
 		this.y=y;
@@ -57,8 +59,10 @@ public class RedBird{
 	
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
-		Graphics2D g2 = (Graphics2D) g;
-		g2.drawImage(img, tx, null);
+		System.out.println("paintRedBird");
+		//Graphics2D g2 = (Graphics2D) g;
+		
+		g.drawImage(img, (int)x, (int)y, null);
 
 		update();
 		

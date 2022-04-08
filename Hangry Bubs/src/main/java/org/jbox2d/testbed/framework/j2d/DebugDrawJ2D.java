@@ -27,6 +27,7 @@
 package org.jbox2d.testbed.framework.j2d;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import org.jbox2d.callbacks.DebugDraw;
@@ -39,6 +40,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.pooling.arrays.IntArray;
 import org.jbox2d.pooling.arrays.Vec2Array;
 import org.jbox2d.testbed.pooling.ColorPool;
+import org.jbox2d.testbed.tests.RedBird;
 
 // pooling local, not thread-safe
 /**
@@ -142,7 +144,19 @@ public class DebugDrawJ2D extends DebugDraw {
     // outside
     drawPolygon(vertices, vertexCount, color);
   }
+  public void drawRedBird() {
 
+	    // inside
+	  
+	  	System.out.println("birb");
+	    Graphics g = getGraphics();
+	    RedBird rb = new RedBird(200,200);
+		rb.paint(g);
+	    // outside
+
+  }
+  
+  
   @Override
   public void drawString(float x, float y, String s, Color3f color) {
     Graphics2D g = getGraphics();

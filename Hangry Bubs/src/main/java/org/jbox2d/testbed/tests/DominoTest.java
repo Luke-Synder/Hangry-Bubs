@@ -26,6 +26,7 @@ package org.jbox2d.testbed.tests;
 import java.awt.Graphics; 
 import java.util.Scanner;
 
+import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -102,7 +103,7 @@ public class DominoTest extends TestbedTest  {
 	    		box(4.0f,4.0f,.3f,i,j+((j/3)*.3f));
 	    	}
     	}
-    	Painter p = new Painter();
+    	
 
 
 
