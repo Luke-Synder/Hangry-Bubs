@@ -856,7 +856,7 @@ public abstract class TestbedTest
     DebugDrawJ2D draw;
    // draw.drawRedBird((int) (Math.random() * 30 - 15), 30);
   }
-
+ 
   private final AABB aabb = new AABB();
 
   public synchronized void launchBomb(Vec2 position, Vec2 velocity) {
