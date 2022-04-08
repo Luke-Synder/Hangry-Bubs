@@ -24,6 +24,7 @@
 package org.jbox2d.testbed.framework.j2d;
 
 import java.awt.AWTError;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -37,6 +38,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.AffineTransform;
+import java.net.URL;
 
 import javax.swing.JPanel;
 
@@ -50,6 +53,7 @@ import org.jbox2d.testbed.framework.TestbedTest;
 import org.jbox2d.testbed.tests.RedBird;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.Image;
 
 /**
  * @author Daniel Murphy
@@ -187,18 +191,38 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
    
     return true;
   }
-
+  private Image getImage(String path) {
+		Image tempImage = null;
+		try {
+			URL imageURL = RedBird.class.getResource(path);
+			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tempImage;
+	}
   public void paintScreen() {
     try {
+    	
       Graphics g = this.getGraphics();
+
       if ((g != null) && dbImage != null) {
+//    	Image img = getImage("/imgs/Red_Bird.png");
+//    	AffineTransform tx = AffineTransform.getTranslateInstance(0, 0);
+//    	g.drawImage(img, 0,0, null);
+
+    	draw.drawRedBird();
+    	
         g.drawImage(dbImage, 0, 0, null);
+        
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
-        System.out.println("birb");
-        RedBird rb = new RedBird(100,100);
-    	rb.paint(g);
-      }
+        
+        
+        
+        
+        
+        }
     } catch (AWTError e) {
       log.error("Graphics context error", e);
     }
