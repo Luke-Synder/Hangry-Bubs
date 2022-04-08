@@ -72,6 +72,7 @@ import org.jbox2d.serialization.UnsupportedListener;
 import org.jbox2d.serialization.UnsupportedObjectException;
 import org.jbox2d.serialization.pb.PbDeserializer;
 import org.jbox2d.serialization.pb.PbSerializer;
+import org.jbox2d.testbed.framework.j2d.DebugDrawJ2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +117,7 @@ public abstract class TestbedTest
   private int pointCount;
   private int stepCount;
 
-  private TestbedModel model;
+  private TestbedModel model; 
   protected DestructionListener destructionListener;
 
   private final LinkedList<QueueItem> inputQueue;
@@ -137,6 +138,7 @@ public abstract class TestbedTest
   private boolean savePending, loadPending, resetPending = false;
 
   public TestbedTest() {
+	
     inputQueue = new LinkedList<QueueItem>();
     serializer = new PbSerializer(this, new SignerAdapter(this) {
       @Override
@@ -851,8 +853,10 @@ public abstract class TestbedTest
     p.set((float) (Math.random() * 30 - 15), 30f);
     v.set(p).mulLocal(-5f);
     launchBomb(p, v);
+    DebugDrawJ2D draw;
+   // draw.drawRedBird((int) (Math.random() * 30 - 15), 30);
   }
-
+ 
   private final AABB aabb = new AABB();
 
   public synchronized void launchBomb(Vec2 position, Vec2 velocity) {

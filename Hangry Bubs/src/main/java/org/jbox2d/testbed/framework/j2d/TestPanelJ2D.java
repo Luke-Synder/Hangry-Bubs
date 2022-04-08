@@ -211,7 +211,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 //    	AffineTransform tx = AffineTransform.getTranslateInstance(0, 0);
 //    	g.drawImage(img, 0,0, null);
 
-    	draw.drawRedBird();
+    	//draw.drawRedBird();
     	
         g.drawImage(dbImage, 0, 0, null);
         
@@ -226,5 +226,9 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     } catch (AWTError e) {
       log.error("Graphics context error", e);
     }
+  }
+  
+  public DebugDrawJ2D getDraw(){
+	  return draw;
   }
 }
