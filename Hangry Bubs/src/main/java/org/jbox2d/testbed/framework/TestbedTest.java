@@ -116,7 +116,7 @@ public abstract class TestbedTest
   private final Vec2 mouseWorld = new Vec2();
   private int pointCount;
   private int stepCount;
-  private final TestPanelJ2D;
+
   private TestbedModel model; 
   protected DestructionListener destructionListener;
 
@@ -854,7 +854,7 @@ public abstract class TestbedTest
     v.set(p).mulLocal(-5f);
     launchBomb(p, v);
     DebugDrawJ2D draw;
-    draw.drawRedBird((int) (Math.random() * 30 - 15), 30);
+   // draw.drawRedBird((int) (Math.random() * 30 - 15), 30);
   }
 
   private final AABB aabb = new AABB();
