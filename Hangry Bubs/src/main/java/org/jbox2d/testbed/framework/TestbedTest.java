@@ -117,7 +117,7 @@ public abstract class TestbedTest
   private int pointCount;
   private int stepCount;
   private final TestPanelJ2D;
-  private TestbedModel model;
+  private TestbedModel model; 
   protected DestructionListener destructionListener;
 
   private final LinkedList<QueueItem> inputQueue;
