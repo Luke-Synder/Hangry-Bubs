@@ -144,13 +144,13 @@ public class DebugDrawJ2D extends DebugDraw {
     // outside
     drawPolygon(vertices, vertexCount, color);
   }
-  public void drawRedBird() {
+  public void drawRedBird(float x,float y) {
 
 	    // inside
 	  
 	  	System.out.println("birb");
 	    Graphics g = getGraphics();
-	    RedBird rb = new RedBird(200,200);
+	    RedBird rb = new RedBird((int) x,(int) y);
 		rb.paint(g);
 	    // outside
 
