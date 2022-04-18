@@ -854,9 +854,10 @@ public abstract class TestbedTest
     p.set((float) (Math.random() * 30 - 15), 30f);
     v.set(p).mulLocal(-5f);
     launchBomb(p, v);
-    TestPanelJ2D argTestPanel = null;
+    TestbedModel model = new TestbedModel();
+    TestPanelJ2D argTestPanel = new TestPanelJ2D(model);
 	DebugDrawJ2D draw = new DebugDrawJ2D(argTestPanel);
-    draw.drawRedBird((float) (Math.random() * 30 - 15), 30);
+    draw.drawRedBird((int) (Math.random() * 30 - 15), 30);
   }
  
   private final AABB aabb = new AABB();
@@ -879,8 +880,8 @@ public abstract class TestbedTest
 
     FixtureDef fd = new FixtureDef();
     fd.shape = circle;
-    fd.density = 10f;
-    fd.restitution = 0;
+    fd.density = 10f; 
+    fd.restitution = 0; // elasticity [0,1]
 
     Vec2 minV = new Vec2(position);
     Vec2 maxV = new Vec2(position);
