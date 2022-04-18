@@ -73,6 +73,7 @@ import org.jbox2d.serialization.UnsupportedObjectException;
 import org.jbox2d.serialization.pb.PbDeserializer;
 import org.jbox2d.serialization.pb.PbSerializer;
 import org.jbox2d.testbed.framework.j2d.DebugDrawJ2D;
+import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -853,8 +854,9 @@ public abstract class TestbedTest
     p.set((float) (Math.random() * 30 - 15), 30f);
     v.set(p).mulLocal(-5f);
     launchBomb(p, v);
-    DebugDrawJ2D draw;
-   // draw.drawRedBird((int) (Math.random() * 30 - 15), 30);
+    TestPanelJ2D argTestPanel = null;
+	DebugDrawJ2D draw = new DebugDrawJ2D(argTestPanel);
+    draw.drawRedBird((float) (Math.random() * 30 - 15), 30);
   }
  
   private final AABB aabb = new AABB();
