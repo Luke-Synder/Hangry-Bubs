@@ -81,6 +81,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
   private boolean drag = false;
 
   public TestPanelJ2D(TestbedModel argModel) {
+	
     setBackground(Color.black);
     draw = new DebugDrawJ2D(this);
     model = argModel;
