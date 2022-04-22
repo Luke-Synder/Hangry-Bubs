@@ -122,6 +122,9 @@ public class DominoTest extends TestbedTest  {
       fd.friction = friction;
       bd.position = new Vec2(x+(thickness), y+height);
       bd.angle = 0;
+      //MediumWoodBlock mwb = new MediumWoodBlock(bd,0,0);
+
+      //mwb.paint(g);
       Body myBody = getWorld().createBody(bd);
       myBody.createFixture(fd);
       

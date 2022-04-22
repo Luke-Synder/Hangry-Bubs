@@ -849,15 +849,19 @@ public abstract class TestbedTest
 
   private final Vec2 p = new Vec2();
   private final Vec2 v = new Vec2();
-
+  private float x=0,y=0;
   public void lanchBomb() {
+	System.out.println("LAUNCHBOMB");
     p.set((float) (Math.random() * 30 - 15), 30f);
     v.set(p).mulLocal(-5f);
     launchBomb(p, v);
     TestbedModel model = new TestbedModel();
-    TestPanelJ2D argTestPanel = new TestPanelJ2D(model);
+    TestPanelJ2D argTestPanel = new TestPanelJ2D(model,x,y);
 	DebugDrawJ2D draw = new DebugDrawJ2D(argTestPanel);
-    draw.drawRedBird((int) (Math.random() * 30 - 15), 30);
+    x+=1;
+    y+=1;
+    System.out.println(x + " " + y);
+    
   }
  
   private final AABB aabb = new AABB();

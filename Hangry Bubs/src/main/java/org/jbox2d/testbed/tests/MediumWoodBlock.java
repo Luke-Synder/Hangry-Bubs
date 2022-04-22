@@ -9,7 +9,10 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class RedBird{
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+
+public class MediumWoodBlock{
 	private Image img; 	
 	private AffineTransform tx;
 	private double x =0,y=0;
@@ -41,9 +44,9 @@ public class RedBird{
 		this.scale = scale;
 	}
 
-	public RedBird(int x, int y) {
-		System.out.println("redBird");
-		img = getImage("/imgs/Red Bird.png"); //load the image for Tree
+	public MediumWoodBlock(BodyDef B, int x, int y) {
+		System.out.println("MediumWoodBlock");
+		img = getImage("/imgs/MediumWoodBlock.png"); //load the image for Tree
 		this.x=x;
 		this.y=y;
 
@@ -59,11 +62,10 @@ public class RedBird{
 	
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
-		//System.out.println("paintRedBird");
+		System.out.println("paintRedBird");
 		Graphics2D g2 = (Graphics2D) g;
-		//System.out.println("OOGA");
+		
 		g2.drawImage(img, tx, null);
-		//System.out.println("bOOGA");
 		update();
 		
 	}
@@ -81,7 +83,7 @@ public class RedBird{
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = RedBird.class.getResource(path);
+			URL imageURL = MediumWoodBlock.class.getResource(path);
 			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();

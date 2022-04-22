@@ -79,6 +79,9 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 
   private final Vec2 dragginMouse = new Vec2();
   private boolean drag = false;
+  private float x,y;
+  //private boolean bird=true;
+  
 
   public TestPanelJ2D(TestbedModel argModel) {
 	
@@ -87,7 +90,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     model = argModel;
     updateSize(INIT_WIDTH, INIT_HEIGHT);
     setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
-
+    
     addMouseWheelListener(new MouseWheelListener() {
 
       private final Vec2 oldCenter = new Vec2();
@@ -122,6 +125,8 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
         currTest.setCachedCameraPos(d.getViewportTranform().getCenter());
       }
     });
+    
+    
 
     addMouseListener(new MouseAdapter() {
       @Override
@@ -159,6 +164,92 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     });
   }
 
+  
+  
+  public TestPanelJ2D(TestbedModel argModel, float X, float Y) {
+		x=X;
+		y=Y;
+		System.out.println("jbfdkfdjsfsdf");
+	    setBackground(Color.black);
+	    draw = new DebugDrawJ2D(this);
+	    model = argModel;
+	    updateSize(INIT_WIDTH, INIT_HEIGHT);
+	    setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
+	    
+	    addMouseWheelListener(new MouseWheelListener() {
+
+	      private final Vec2 oldCenter = new Vec2();
+	      private final Vec2 newCenter = new Vec2();
+	      private final Mat22 upScale = Mat22.createScaleTransform(ZOOM_IN_SCALE);
+	      private final Mat22 downScale = Mat22.createScaleTransform(ZOOM_OUT_SCALE);
+
+	      public void mouseWheelMoved(MouseWheelEvent e) {
+	        DebugDraw d = draw;
+	        int notches = e.getWheelRotation();
+	        TestbedTest currTest = model.getCurrTest();
+	        if (currTest == null) {
+	          return;
+	        }
+	        OBBViewportTransform trans = (OBBViewportTransform) d.getViewportTranform();
+	        oldCenter.set(model.getCurrTest().getWorldMouse());
+	        // Change the zoom and clamp it to reasonable values - can't clamp now.
+	        if (notches < 0) {
+	          trans.mulByTransform(upScale);
+	          currTest.setCachedCameraScale(currTest.getCachedCameraScale() * ZOOM_IN_SCALE);
+	        } else if (notches > 0) {
+	          trans.mulByTransform(downScale);
+	          currTest.setCachedCameraScale(currTest.getCachedCameraScale() * ZOOM_OUT_SCALE);
+	        }
+
+	        d.getScreenToWorldToOut(model.getMouse(), newCenter);
+
+	        Vec2 transformedMove = oldCenter.subLocal(newCenter);
+	        d.getViewportTranform().setCenter(
+	            d.getViewportTranform().getCenter().addLocal(transformedMove));
+
+	        currTest.setCachedCameraPos(d.getViewportTranform().getCenter());
+	      }
+	    });
+	    
+	    
+
+	    addMouseListener(new MouseAdapter() {
+	      @Override
+	      public void mousePressed(MouseEvent e) {
+	        dragginMouse.set(e.getX(), e.getY());
+	        drag = e.getButton() == MouseEvent.BUTTON3;
+	      }
+	    });
+
+	    addMouseMotionListener(new MouseMotionAdapter() {
+	      @Override
+	      public void mouseDragged(MouseEvent e) {
+	        if (!drag) {
+	          return;
+	        }
+	        TestbedTest currTest = model.getCurrTest();
+	        if (currTest == null) {
+	          return;
+	        }
+	        Vec2 diff = new Vec2(e.getX(), e.getY());
+	        diff.subLocal(dragginMouse);
+	        currTest.getDebugDraw().getViewportTranform().getScreenVectorToWorld(diff, diff);
+	        currTest.getDebugDraw().getViewportTranform().getCenter().subLocal(diff);
+
+	        dragginMouse.set(e.getX(), e.getY());
+	      }
+	    });
+
+	    addComponentListener(new ComponentAdapter() {
+	      @Override
+	      public void componentResized(ComponentEvent e) {
+	        updateSize(getWidth(), getHeight());
+	        dbImage = null;
+	      }
+	    });
+	  }
+  
+  
   @Override
   public DebugDraw getDebugDraw() {
     return draw;
@@ -202,6 +293,20 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 		}
 		return tempImage;
 	}
+  public void paintRB(float X, float Y, boolean Bird) {
+	  //System.out.println("RBS");
+	  x=X;
+	  y=Y;
+	  /*
+	  try {
+		  Graphics g = this.getGraphics();
+		  draw.drawRedBird(x, y);
+	  }
+	  catch (AWTError e) {
+	      log.error("Graphics context error", e);
+	   }
+	   */
+  }
   public void paintScreen() {
     try {
     	
@@ -211,8 +316,12 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 //    	Image img = getImage("/imgs/Red_Bird.png");
 //    	AffineTransform tx = AffineTransform.getTranslateInstance(0, 0);
 //    	g.drawImage(img, 0,0, null);
-
-    	//draw.drawRedBird();
+    	System.out.println(x + " " + y);
+    		
+    	draw.drawRedBird(x, y);
+    	
+    	
+    	
     	
         g.drawImage(dbImage, 0, 0, null);
         
