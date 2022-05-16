@@ -891,7 +891,7 @@ public abstract class TestbedTest
     fd.shape = circle;
     fd.density = 10f; 
     fd.restitution = 0; // elasticity [0,1]
-
+ 
     Vec2 minV = new Vec2(position);
     Vec2 maxV = new Vec2(position);
 
