@@ -13,7 +13,7 @@ public class RedBird{
 	private Image img; 	
 	private AffineTransform tx;
 	private double x =0,y=0;
-	private double scale =.75;
+	private double scale =.12;
 	
 	public double getX() {
 		return x; 
@@ -42,10 +42,10 @@ public class RedBird{
 	}
 
 	public RedBird(int x, int y) {
-		System.out.println("redBird");
+		//System.out.println("redBird");
 		img = getImage("/imgs/Red Bird.png"); //load the image for Tree
-		this.x=x;
-		this.y=y;
+		this.x=x+520;
+		this.y=y+180;
 
 		tx = AffineTransform.getTranslateInstance(0, 0);
 		update(); 				//initialize the location of the image

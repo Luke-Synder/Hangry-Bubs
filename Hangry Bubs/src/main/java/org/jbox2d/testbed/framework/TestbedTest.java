@@ -193,6 +193,7 @@ public abstract class TestbedTest
   }
 
   public void init(TestbedModel argModel) {
+	  
     model = argModel;
     destructionListener = new DestructionListener() {
 
@@ -567,7 +568,14 @@ public abstract class TestbedTest
   private final Vec2 p2 = new Vec2();
   private final Vec2 tangent = new Vec2();
   private final List<String> statsList = new ArrayList<String>();
-
+  
+  public String pos() {
+	  String str = m_world.getBodyList().getPosition().toString();
+	  //System.out.println(str);
+	  return str;
+	  
+  }
+  
   public synchronized void step(TestbedSettings settings) {
     float hz = settings.getSetting(TestbedSettings.Hz).value;
     float timeStep = hz > 0f ? 1f / hz : 0;
@@ -607,7 +615,7 @@ public abstract class TestbedTest
         settings.getSetting(TestbedSettings.PositionIterations).value);
 
     m_world.drawDebugData();
-
+    //System.out.println(m_world.getBodyList().getPosition().toString());
     if (timeStep > 0f) {
       ++stepCount;
     }
@@ -855,9 +863,6 @@ public abstract class TestbedTest
     p.set((float) (Math.random() * 30 - 15), 30f);
     v.set(p).mulLocal(-5f);
     launchBomb(p, v);
-    TestbedModel model = new TestbedModel();
-    TestPanelJ2D argTestPanel = new TestPanelJ2D(model,x,y);
-	DebugDrawJ2D draw = new DebugDrawJ2D(argTestPanel);
     x+=1;
     y+=1;
     System.out.println(x + " " + y);
@@ -913,7 +918,7 @@ public abstract class TestbedTest
 
     float multiplier = 30f;
     vel.set(bombSpawnPoint).subLocal(p);
-    vel.mulLocal(multiplier);
+    vel.mulLocal(multiplier/10);
     launchBomb(bombSpawnPoint, vel);
     bombSpawning = false;
   }

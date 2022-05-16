@@ -25,6 +25,8 @@ package org.jbox2d.testbed.framework.j2d;
 
 import java.awt.AWTError;
 
+
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -50,7 +52,9 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedPanel;
 import org.jbox2d.testbed.framework.TestbedTest;
+import org.jbox2d.testbed.tests.MediumWoodBlock;
 import org.jbox2d.testbed.tests.RedBird;
+import org.jbox2d.testbed.tests.SlingShot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.Image;
@@ -70,6 +74,8 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 
   private Graphics2D dbg = null;
   private Image dbImage = null;
+  private Graphics2D gr = null;
+ // MediumWoodBlock M = new MediumWoodBlock();
 
   private int panelWidth;
   private int panelHeight;
@@ -80,16 +86,20 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
   private final Vec2 dragginMouse = new Vec2();
   private boolean drag = false;
   private float x,y;
+  private TestbedTest tests;
+  private int count=0;
   //private boolean bird=true;
   
 
   public TestPanelJ2D(TestbedModel argModel) {
-	
+	System.out.println("sjhajdsahd");
     setBackground(Color.black);
     draw = new DebugDrawJ2D(this);
     model = argModel;
     updateSize(INIT_WIDTH, INIT_HEIGHT);
     setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
+    
+    
     
     addMouseWheelListener(new MouseWheelListener() {
 
@@ -102,7 +112,9 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
         DebugDraw d = draw;
         int notches = e.getWheelRotation();
         TestbedTest currTest = model.getCurrTest();
+
         if (currTest == null) {
+        	System.out.println("curr test is null");
           return;
         }
         OBBViewportTransform trans = (OBBViewportTransform) d.getViewportTranform();
@@ -166,97 +178,39 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 
   
   
-  public TestPanelJ2D(TestbedModel argModel, float X, float Y) {
-		x=X;
-		y=Y;
-		System.out.println("jbfdkfdjsfsdf");
-	    setBackground(Color.black);
-	    draw = new DebugDrawJ2D(this);
-	    model = argModel;
-	    updateSize(INIT_WIDTH, INIT_HEIGHT);
-	    setPreferredSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
-	    
-	    addMouseWheelListener(new MouseWheelListener() {
-
-	      private final Vec2 oldCenter = new Vec2();
-	      private final Vec2 newCenter = new Vec2();
-	      private final Mat22 upScale = Mat22.createScaleTransform(ZOOM_IN_SCALE);
-	      private final Mat22 downScale = Mat22.createScaleTransform(ZOOM_OUT_SCALE);
-
-	      public void mouseWheelMoved(MouseWheelEvent e) {
-	        DebugDraw d = draw;
-	        int notches = e.getWheelRotation();
-	        TestbedTest currTest = model.getCurrTest();
-	        if (currTest == null) {
-	          return;
-	        }
-	        OBBViewportTransform trans = (OBBViewportTransform) d.getViewportTranform();
-	        oldCenter.set(model.getCurrTest().getWorldMouse());
-	        // Change the zoom and clamp it to reasonable values - can't clamp now.
-	        if (notches < 0) {
-	          trans.mulByTransform(upScale);
-	          currTest.setCachedCameraScale(currTest.getCachedCameraScale() * ZOOM_IN_SCALE);
-	        } else if (notches > 0) {
-	          trans.mulByTransform(downScale);
-	          currTest.setCachedCameraScale(currTest.getCachedCameraScale() * ZOOM_OUT_SCALE);
-	        }
-
-	        d.getScreenToWorldToOut(model.getMouse(), newCenter);
-
-	        Vec2 transformedMove = oldCenter.subLocal(newCenter);
-	        d.getViewportTranform().setCenter(
-	            d.getViewportTranform().getCenter().addLocal(transformedMove));
-
-	        currTest.setCachedCameraPos(d.getViewportTranform().getCenter());
-	      }
-	    });
-	    
-	    
-
-	    addMouseListener(new MouseAdapter() {
-	      @Override
-	      public void mousePressed(MouseEvent e) {
-	        dragginMouse.set(e.getX(), e.getY());
-	        drag = e.getButton() == MouseEvent.BUTTON3;
-	      }
-	    });
-
-	    addMouseMotionListener(new MouseMotionAdapter() {
-	      @Override
-	      public void mouseDragged(MouseEvent e) {
-	        if (!drag) {
-	          return;
-	        }
-	        TestbedTest currTest = model.getCurrTest();
-	        if (currTest == null) {
-	          return;
-	        }
-	        Vec2 diff = new Vec2(e.getX(), e.getY());
-	        diff.subLocal(dragginMouse);
-	        currTest.getDebugDraw().getViewportTranform().getScreenVectorToWorld(diff, diff);
-	        currTest.getDebugDraw().getViewportTranform().getCenter().subLocal(diff);
-
-	        dragginMouse.set(e.getX(), e.getY());
-	      }
-	    });
-
-	    addComponentListener(new ComponentAdapter() {
-	      @Override
-	      public void componentResized(ComponentEvent e) {
-	        updateSize(getWidth(), getHeight());
-	        dbImage = null;
-	      }
-	    });
-	  }
+ 
   
   
   @Override
   public DebugDraw getDebugDraw() {
+	render();
     return draw;
   }
 
   public Graphics2D getDBGraphics() {
     return dbg;
+  }
+  public Graphics2D get2DGraphics() {	
+	  Image tempImage = null;
+		try {
+			URL imageURL = MediumWoodBlock.class.getResource("/imgs/Medium Wood Plank.png");
+			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
+		} catch (Exception e) {
+			System.out.println("goof");
+			e.printStackTrace();
+		}
+	  Image img = tempImage;
+      if (img == null) {
+        System.out.println("fail");
+        return gr;
+      }
+      else {
+    	  gr = (Graphics2D) img.getGraphics();
+	  	if(gr==null) {
+	  		System.out.println("oofer");
+	  	}
+	  return gr;
+      }
   }
 
   private void updateSize(int argWidth, int argHeight) {
@@ -278,9 +232,33 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
       }
       dbg = (Graphics2D) dbImage.getGraphics();
     }
+    count++;
+    if(model == null) {
+    	System.out.println("model is null");
+    }
+    else if(count>100&&count<100) {
+    	
+    }
+    else {
+    	double xy[] = model.getXY();
+    	System.out.println(xy[0] + ", " + xy[1]);
+    	count=0;
+    	
+    }
+    double xy[] = model.getXY();
     dbg.setColor(Color.black);
     dbg.fillRect(0, 0, panelWidth, panelHeight);
-   
+    dbg.setColor(Color.blue);
+    dbg.fillOval(30, 30, 30, 30);
+    SlingShot ss = new SlingShot(100,490);
+    ss.paint(dbg);
+    RedBird rb = new RedBird((int) xy[0],(int) xy[1]);
+	rb.paint(dbg);
+    
+     //System.out.println("ooga");
+	if(gr==null) {
+  		//System.out.println("booga");
+  	}
     return true;
   }
   private Image getImage(String path) {
@@ -316,12 +294,12 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 //    	Image img = getImage("/imgs/Red_Bird.png");
 //    	AffineTransform tx = AffineTransform.getTranslateInstance(0, 0);
 //    	g.drawImage(img, 0,0, null);
-    	System.out.println(x + " " + y);
+    	//System.out.println(x + " " + y);
     		
-    	draw.drawRedBird(x, y);
+    	//draw.drawRedBird(0, 0);
+    	//draw.drawWoodBlock(0, 0);
     	
-    	
-    	
+
     	
         g.drawImage(dbImage, 0, 0, null);
         

@@ -15,11 +15,11 @@ import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.j2d.DebugDrawJ2D;
 import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
-public class MediumWoodBlock{
+public class SlingShot{
 	private Image img; 	
 	private AffineTransform tx;
 	private double x =0,y=0;
-	private double scale =.75;
+	private double scale =.1;
 	private Graphics2D G2;
 	
 	public double getX() {
@@ -48,9 +48,9 @@ public class MediumWoodBlock{
 		this.scale = scale;
 	}
 
-	public MediumWoodBlock(BodyDef B, int x, int y) {
+	public SlingShot(BodyDef B, int x, int y) {
 		//System.out.println("MediumWoodBlock");
-		img = getImage("/imgs/Medium Wood Plank.png"); //load the image for Tree
+		img = getImage("/imgs/Slingshot.png"); //load the image for Tree
 		this.x=x;
 		this.y=y;
 
@@ -59,9 +59,9 @@ public class MediumWoodBlock{
 									//use your variables
 	}
 	
-	public MediumWoodBlock(int x, int y) {
+	public SlingShot(int x, int y) {
 		//System.out.println("redBird");
-		img = getImage("/imgs/Medium Wood Plank.png"); //load the image for Tree
+		img = getImage("/imgs/Slingshot.png"); //load the image for Tree
 		this.x=x;
 		this.y=y;
 		//Graphics2D g2 = (Graphics2D) g;
@@ -106,7 +106,7 @@ public class MediumWoodBlock{
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = MediumWoodBlock.class.getResource(path);
+			URL imageURL = SlingShot.class.getResource(path);
 			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();
