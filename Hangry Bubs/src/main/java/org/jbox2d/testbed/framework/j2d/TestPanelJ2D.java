@@ -244,7 +244,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     	double xy[] = model.getXY(0);
     	System.out.println(xy[0] + ", " + xy[1]);
     	count=0;
-    	
+    	 
     }
     */
     
