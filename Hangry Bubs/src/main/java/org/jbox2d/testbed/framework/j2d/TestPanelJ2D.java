@@ -266,7 +266,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
   		//System.out.println("booga");
   	}
     return true;
-  }
+  } 
   private Image getImage(String path) {
 		Image tempImage = null;
 		try {
