@@ -143,7 +143,7 @@ public class TestbedModel {
 	  }
 	  else {
 
-		  String str = getPos(index);
+		  String str = getPos(index); 
 		  double x= 0;
 		  double y= 0;
 		  double a=0;
