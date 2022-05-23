@@ -610,7 +610,7 @@ public abstract class TestbedTest
 	  for(int i=0; i<index; i++) {
 		  b= b.m_next;
 	  }
-	  Double v = b.getLinearVelocity();
+	  //Double v = b.getLinearVelocity();
 	  
   }
   
