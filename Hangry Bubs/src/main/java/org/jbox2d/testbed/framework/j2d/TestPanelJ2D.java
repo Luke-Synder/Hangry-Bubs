@@ -88,7 +88,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
   private boolean drag = false;
   private float x,y;
   private TestbedTest tests;
-  private int count=0;
+  private int count=4;
   //private boolean bird=true;
   
 
@@ -258,18 +258,29 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     double[] xya = model.getXYA(0);
     RedBird rb = new RedBird((int) xya[0],(int) xya[1]);
 	rb.paint(dbg);
-	
 	if(DominoTest.AngryBirdsMapIsLoaded) {
 		double[] xyaB = model.getXYA(3);
 		MediumWoodBlock mwb = new MediumWoodBlock((int) xyaB[0],(int) xyaB[1]+7);
 		mwb.paint(dbg,xyaB[2]);
 		
-		for(int i=1; i<29; i++) {
+		for(int i=1; i<(model.bodySize()-2); i++) {
 				xyaB = model.getXYA(i);
 				mwb = new MediumWoodBlock((int) xyaB[0],(int) xyaB[1]+7);
 				mwb.paint(dbg,xyaB[2]);
 		}
 		dbg.fillOval((int) xyaB[0],(int) xyaB[1]+7, 5, 5);
+		
+		if(model.isCont()) {
+			model.destroyBody();
+			//System.out.println("contact");
+			
+		}
+		else {
+			//System.out.println("not in contact");
+		}
+		//count&=2;
+		//System.out.println(count);
+		
 	}
 	
 	

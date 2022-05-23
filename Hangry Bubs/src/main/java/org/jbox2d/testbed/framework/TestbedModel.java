@@ -29,6 +29,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 
 /**
  * Model for the testbed
@@ -174,6 +175,22 @@ public class TestbedModel {
 		  double[] xya = {x,y,a};
 		  return xya;
 	  }
+  }
+  
+  public int bodySize() {
+	  return test.bodySize();
+  }
+  
+  public boolean isCont() {
+	  return test.isRedBirdCont();
+  }
+  
+  public Body getBB() {
+	  return test.getBodyB();
+  }
+  
+  public void destroyBody(){
+	  test.destroyBody();
   }
   
   public int getCurrTestIndex() {

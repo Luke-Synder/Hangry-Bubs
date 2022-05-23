@@ -111,8 +111,8 @@ public class MediumWoodBlock{
 		System.out.println(a);
 		g.drawImage(img, tx, null);
 		*/
-		System.out.println("updating");
-		System.out.println("angle: "+ a);
+		//System.out.println("updating");
+		//System.out.println("angle: "+ a);
 		a= (Math.PI/2)-a;
 		//System.out.println("angle" + a);
 

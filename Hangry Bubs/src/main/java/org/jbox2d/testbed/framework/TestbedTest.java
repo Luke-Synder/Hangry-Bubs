@@ -137,6 +137,8 @@ public abstract class TestbedTest
   private boolean dialogOnSaveLoadErrors = true;
 
   private boolean savePending, loadPending, resetPending = false;
+  private Fixture fixA;
+  private Fixture fixB;
 
   public TestbedTest() {
 	
@@ -571,6 +573,7 @@ public abstract class TestbedTest
   
   public String pos() {
 	  String str="";
+	 
 	  if(m_world.getBodyList().m_next!=null) {
 		  str = m_world.getBodyList().m_next.getPosition().toString();
 	  }
@@ -586,6 +589,10 @@ public abstract class TestbedTest
 	  return str;
 	  
   }
+
+  public int bodySize() {
+	  return m_world.getBodyCount();
+  }
   
   public String posIndex(int index) {
 	  String str="";
@@ -598,14 +605,69 @@ public abstract class TestbedTest
 	  return str;
   }
   
+  public double[] getMomentum(int index) {
+	  Body b= m_world.getBodyList();
+	  for(int i=0; i<index; i++) {
+		  b= b.m_next;
+	  }
+	  Double v = b.getLinearVelocity();
+	  
+  }
+  
+  
+  
+
+  
+  
   public Body getRedBirdBody()
   {
 	  return m_world.getBodyList();
   }
   
-  public boolean isRedBirdCont() {
-	  return true;
+  public Contact getContList() {
+	  return m_world.getContactList();
   }
+  
+  public boolean isRedBirdCont() {
+	  if(m_world.getContactList()==null) {
+		  return false;
+	  }
+	  fixA = m_world.getContactList().getFixtureA();
+	  fixB = m_world.getContactList().getFixtureB();
+	  
+	  
+	  Body b= m_world.getBodyList();
+	  for(int i=0; i<bodySize()-2; i++) {
+		  b= b.m_next;
+	  }
+	  
+	  if(fixB.getBody()==m_world.getBodyList()    && fixA.getBody()!= b) {
+		  return m_world.getContactList().isTouching();
+	  }
+	  return false;
+  }
+  
+  public Body getBodyB() {
+	  return fixB.getBody();
+  }
+  
+  public Body getBodyA() {
+	  return fixA.getBody();
+  }
+  
+  public void destroyBody() {
+	  boolean des = isRedBirdCont();
+	  if(des) {
+		  m_world.destroyBody(getBodyA());
+	  }
+  }
+  
+  
+  
+  
+  
+  
+  
   public synchronized void step(TestbedSettings settings) {
     float hz = settings.getSetting(TestbedSettings.Hz).value;
     float timeStep = hz > 0f ? 1f / hz : 0;
