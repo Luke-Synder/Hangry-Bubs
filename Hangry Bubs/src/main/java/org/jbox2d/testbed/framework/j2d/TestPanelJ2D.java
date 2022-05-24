@@ -29,6 +29,7 @@ import java.awt.AWTError;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -89,6 +90,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
   private float x,y;
   private TestbedTest tests;
   private int count=4;
+  static double prevMoment;
   //private boolean bird=true;
   
 
@@ -251,14 +253,21 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     
     dbg.setColor(Color.black);
     dbg.fillRect(0, 0, panelWidth, panelHeight);
-    dbg.setColor(Color.blue);
-    dbg.fillOval(30, 30, 30, 30);
-    SlingShot ss = new SlingShot(100,490);
-    ss.paint(dbg);
-    double[] xya = model.getXYA(0);
-    RedBird rb = new RedBird((int) xya[0],(int) xya[1]);
-	rb.paint(dbg);
+    //dbg.setColor(Color.blue);
+    //dbg.fillOval(30, 30, 30, 30);
+
 	if(DominoTest.AngryBirdsMapIsLoaded) {
+	    SlingShot ss = new SlingShot(100,490);
+	    ss.paint(dbg);
+	    Font f = new Font("ComicSans", Font.BOLD, 20);
+	    dbg.setFont(f);
+	    dbg.setColor(Color.white);
+	    String score = "Score: " + model.getScore();
+	    dbg.drawString(score , 1500, 10);
+	    
+	    double[] xya = model.getXYA(0);
+	    RedBird rb = new RedBird((int) xya[0],(int) xya[1]);
+		rb.paint(dbg);
 		double[] xyaB = model.getXYA(3);
 		MediumWoodBlock mwb = new MediumWoodBlock((int) xyaB[0],(int) xyaB[1]+7);
 		mwb.paint(dbg,xyaB[2]);
@@ -269,15 +278,20 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 				mwb.paint(dbg,xyaB[2]);
 		}
 		dbg.fillOval((int) xyaB[0],(int) xyaB[1]+7, 5, 5);
-		
+		Double moment = model.getMomentum(0);
 		if(model.isCont()) {
-			model.destroyBody();
+			double impulse = moment-prevMoment;
+			System.out.println("Previous Momentum: " + prevMoment + " Momentum: " + moment + " impulse: " + impulse);
+			if(Math.abs(impulse)>100) {	
+				model.destroyBody();
+			}
 			//System.out.println("contact");
 			
 		}
 		else {
 			//System.out.println("not in contact");
 		}
+		prevMoment = moment;
 		//count&=2;
 		//System.out.println(count);
 		

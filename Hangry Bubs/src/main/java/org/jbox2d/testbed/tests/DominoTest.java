@@ -211,6 +211,6 @@ public class DominoTest extends TestbedTest  {
   }
   @Override
   public String getTestName() {
-    return "Hangury Burbs";
+    return "Hangury Bubs";
   }
 }

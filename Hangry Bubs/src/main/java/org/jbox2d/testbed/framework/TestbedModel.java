@@ -193,6 +193,16 @@ public class TestbedModel {
 	  test.destroyBody();
   }
   
+  public double getMomentum(int index) {
+	  return test.getMomentum(index);
+  }
+  
+  public int getScore()
+  {
+	  return test.getScore();
+  }
+  
+  
   public int getCurrTestIndex() {
     return currTestIndex;
   }

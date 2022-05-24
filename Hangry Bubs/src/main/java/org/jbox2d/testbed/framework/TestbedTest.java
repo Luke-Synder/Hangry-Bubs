@@ -139,7 +139,8 @@ public abstract class TestbedTest
   private boolean savePending, loadPending, resetPending = false;
   private Fixture fixA;
   private Fixture fixB;
-
+  private int score=0;
+  
   public TestbedTest() {
 	
     inputQueue = new LinkedList<QueueItem>();
@@ -605,12 +606,25 @@ public abstract class TestbedTest
 	  return str;
   }
   
-  public double[] getMomentum(int index) {
+  public double getMomentum(int index) {
 	  Body b= m_world.getBodyList();
 	  for(int i=0; i<index; i++) {
 		  b= b.m_next;
 	  }
-	  //Double v = b.getLinearVelocity();
+	  Vec2 vec = b.getLinearVelocity();
+	  double x= 0;
+	  double y= 0;
+	  String str = vec.toString();
+	  //System.out.println(str);
+	  x= Double.parseDouble(str.substring(1,str.indexOf(",")));
+	  y= Double.parseDouble(str.substring(1+str.indexOf(","), str.length()-1));
+	  //System.out.println("x: " + x + " y: " + y);
+	  Double speed = Math.sqrt((Math.pow(x, 2) + Math.pow(y, 2)));
+	  //System.out.println("speed: " + speed);
+	  Double mass = (double) b.getMass();
+	  //System.out.println("mass: " + mass);
+	  Double Moment = speed*mass;
+	  return Moment;
 	  
   }
   
@@ -630,6 +644,7 @@ public abstract class TestbedTest
   
   public boolean isRedBirdCont() {
 	  if(m_world.getContactList()==null) {
+
 		  return false;
 	  }
 	  fixA = m_world.getContactList().getFixtureA();
@@ -641,9 +656,12 @@ public abstract class TestbedTest
 		  b= b.m_next;
 	  }
 	  
-	  if(fixB.getBody()==m_world.getBodyList()    && fixA.getBody()!= b) {
+	  if(fixB.getBody()==m_world.getBodyList() && fixA.getBody()!= b) {
+		  //System.out.println("FAILED"); 
 		  return m_world.getContactList().isTouching();
+		  //return true;
 	  }
+	  
 	  return false;
   }
   
@@ -657,9 +675,22 @@ public abstract class TestbedTest
   
   public void destroyBody() {
 	  boolean des = isRedBirdCont();
+	  fixA = m_world.getContactList().getFixtureA();
+	  CircleShape circle = new CircleShape();
+      circle.m_radius = 2f;
 	  if(des) {
+		  if(fixA.getShape().equals(circle)) {
+			  score+=5000;
+		  }
+		  else {
+			  score+=500;
+		  }
 		  m_world.destroyBody(getBodyA());
 	  }
+  }
+  
+  public int getScore() {
+	  return score;
   }
   
   
@@ -742,6 +773,7 @@ public abstract class TestbedTest
     }
 
     if (settings.getSetting(TestbedSettings.DrawHelp).enabled) {
+    /*
       debugDraw.drawString(5, m_textLine, "Help", color4);
       m_textLine += 15;
       debugDraw.drawString(5, m_textLine, "Click and drag the left mouse button to move objects.",
@@ -758,6 +790,7 @@ public abstract class TestbedTest
       debugDraw.drawString(5, m_textLine, "Press '[' or ']' to change tests, and 'r' to restart.",
           Color3f.WHITE);
       m_textLine += 20;
+      */
     }
 
     if (!textList.isEmpty()) {
