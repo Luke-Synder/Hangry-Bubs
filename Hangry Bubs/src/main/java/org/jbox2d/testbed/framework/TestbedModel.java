@@ -177,6 +177,9 @@ public class TestbedModel {
 	  }
   }
   
+  public void destruction() {
+	  test.Destruction();
+  }
   public int bodySize() {
 	  return test.bodySize();
   }

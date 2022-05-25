@@ -43,6 +43,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -89,8 +90,9 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
   private boolean drag = false;
   private float x,y;
   private TestbedTest tests;
-  private int count=4;
+  private int count=0;
   static double prevMoment;
+  private ArrayList<Double> prevTMoment = new ArrayList<Double>();
   //private boolean bird=true;
   
 
@@ -278,11 +280,13 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 				mwb.paint(dbg,xyaB[2]);
 		}
 		dbg.fillOval((int) xyaB[0],(int) xyaB[1]+7, 5, 5);
+		model.destruction();
+		/*
 		Double moment = model.getMomentum(0);
 		if(model.isCont()) {
 			double impulse = moment-prevMoment;
 			System.out.println("Previous Momentum: " + prevMoment + " Momentum: " + moment + " impulse: " + impulse);
-			if(Math.abs(impulse)>100) {	
+			if(Math.abs(impulse)>200) {	
 				model.destroyBody();
 			}
 			//System.out.println("contact");
@@ -291,10 +295,14 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 		else {
 			//System.out.println("not in contact");
 		}
-		prevMoment = moment;
+		prevTMoment.add(moment);
+		count++;
+		if(count>=1) {
+			prevMoment = prevTMoment.get(count-1);
+		}
 		//count&=2;
 		//System.out.println(count);
-		
+		*/
 	}
 	
 	

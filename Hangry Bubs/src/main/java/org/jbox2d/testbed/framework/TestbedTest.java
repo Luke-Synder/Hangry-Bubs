@@ -140,6 +140,8 @@ public abstract class TestbedTest
   private Fixture fixA;
   private Fixture fixB;
   private int score=0;
+  private ArrayList<Double> prevTMoment = new ArrayList<Double>(); 
+  private ArrayList<Double> prevAMoment = new ArrayList<Double>(); 
   
   public TestbedTest() {
 	
@@ -679,7 +681,7 @@ public abstract class TestbedTest
 	  CircleShape circle = new CircleShape();
       circle.m_radius = 2f;
 	  if(des) {
-		  if(fixA.getShape().equals(circle)) {
+		  if(fixA.getShape()==circle) {
 			  score+=5000;
 		  }
 		  else {
@@ -693,6 +695,53 @@ public abstract class TestbedTest
 	  return score;
   }
   
+  public void Destruction() {
+	  
+	  for(int index=1; index<model.bodySize()-2; index++) {
+		  
+		  Body b= m_world.getBodyList();
+		  for(int i=0; i<index; i++) {
+			  b= b.m_next;
+		  }
+		  Vec2 vec = b.getLinearVelocity();
+		  double x= 0;
+		  double y= 0;
+		  String str = vec.toString();
+		  //System.out.println(str);
+		  x= Double.parseDouble(str.substring(1,str.indexOf(",")));
+		  y= Double.parseDouble(str.substring(1+str.indexOf(","), str.length()-1));
+		  //System.out.println("x: " + x + " y: " + y);
+		  Double speed = Math.sqrt((Math.pow(x, 2) + Math.pow(y, 2)));
+		  //System.out.println("speed: " + speed);
+		  Double mass = (double) b.getMass();
+		  //System.out.println("mass: " + mass);
+		  Double Moment = speed*mass;
+		  
+		  Float angVel = b.getAngularVelocity();
+		  Float inertia = b.getInertia();
+		  //System.out.println("mass: " + mass);
+		  Double angMoment = (double) (Math.abs(angVel)*inertia);
+		  
+		  if(index-1> prevTMoment.size()-1) {
+			  prevTMoment.add(Moment);
+			  prevAMoment.add(angMoment);
+		  }
+		  else {
+			  Double impulse = Math.abs( Moment- prevTMoment.get(index-1));
+			  Double angImpulse = Math.abs(angMoment- prevAMoment.get(index-1));
+			  
+			  if(impulse+angImpulse>1100 || impulse>600 || angImpulse>600) {
+				  System.out.println("Angular Impulse: " + angImpulse + " Translation Impulse: " + impulse);
+				  m_world.destroyBody(b);
+			  }
+			  
+			  prevTMoment.set(index-1, Moment);
+			  prevAMoment.set(index-1, angMoment);
+		  }
+		  
+	  }
+  }
+  
   
   
   
@@ -700,7 +749,8 @@ public abstract class TestbedTest
   
   
   public synchronized void step(TestbedSettings settings) {
-    float hz = settings.getSetting(TestbedSettings.Hz).value;
+    //float hz = settings.getSetting(TestbedSettings.Hz).value;
+	  float hz=20;
     float timeStep = hz > 0f ? 1f / hz : 0;
     if (settings.singleStep && !settings.pause) {
       settings.pause = true;
@@ -986,7 +1036,7 @@ public abstract class TestbedTest
   public void lanchBomb() {
 	System.out.println("LAUNCHBOMB");
     p.set((float) (Math.random() * 30 - 15), 30f);
-    v.set(p).mulLocal(-5f);
+    v.set(p).mulLocal(-10f);
     launchBomb(p, v);
     x+=1;
     y+=1;
