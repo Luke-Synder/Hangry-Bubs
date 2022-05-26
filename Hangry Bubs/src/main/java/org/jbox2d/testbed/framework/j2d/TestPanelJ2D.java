@@ -56,6 +56,7 @@ import org.jbox2d.testbed.framework.TestbedPanel;
 import org.jbox2d.testbed.framework.TestbedTest;
 import org.jbox2d.testbed.tests.DominoTest;
 import org.jbox2d.testbed.tests.MediumWoodBlock;
+import org.jbox2d.testbed.tests.Pig;
 import org.jbox2d.testbed.tests.RedBird;
 import org.jbox2d.testbed.tests.SlingShot;
 import org.slf4j.Logger;
@@ -91,6 +92,7 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
   private float x,y;
   private TestbedTest tests;
   private int count=0;
+  static int IND = 0;
   static double prevMoment;
   private ArrayList<Double> prevTMoment = new ArrayList<Double>();
   //private boolean bird=true;
@@ -259,6 +261,12 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     //dbg.fillOval(30, 30, 30, 30);
 
 	if(DominoTest.AngryBirdsMapIsLoaded) {
+		if(model.bodySize()>30) {
+			IND=1;
+		}
+		if(model.isResetPending()) {
+			IND=0;
+		}
 	    SlingShot ss = new SlingShot(100,490);
 	    ss.paint(dbg);
 	    Font f = new Font("ComicSans", Font.BOLD, 20);
@@ -266,20 +274,24 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 	    dbg.setColor(Color.white);
 	    String score = "Score: " + model.getScore();
 	    dbg.drawString(score , 1500, 10);
-	    
-	    double[] xya = model.getXYA(0);
-	    RedBird rb = new RedBird((int) xya[0],(int) xya[1]);
-		rb.paint(dbg);
-		double[] xyaB = model.getXYA(3);
+	    if(IND!=0) {
+	    	double[] xya = model.getXYA(IND-1);
+	    	RedBird rb = new RedBird((int) xya[0],(int) xya[1]);
+	    	rb.paint(dbg);
+	    }
+		double[] xyaB = model.getXYA(IND);
+		Pig kingPig = new Pig((int) xyaB[0],(int) xyaB[1]);
+		kingPig.paint(dbg,xyaB[2]);
+		xyaB = model.getXYA(IND+1);
 		MediumWoodBlock mwb = new MediumWoodBlock((int) xyaB[0],(int) xyaB[1]+7);
 		mwb.paint(dbg,xyaB[2]);
 		
-		for(int i=1; i<(model.bodySize()-2); i++) {
-				xyaB = model.getXYA(i);
+		for(int i=2; i<(model.bodySize()-2-IND); i++) {
+				xyaB = model.getXYA(IND+i);
 				mwb = new MediumWoodBlock((int) xyaB[0],(int) xyaB[1]+7);
 				mwb.paint(dbg,xyaB[2]);
 		}
-		dbg.fillOval((int) xyaB[0],(int) xyaB[1]+7, 5, 5);
+		//dbg.fillOval((int) xyaB[0],(int) xyaB[1]+7, 5, 5);
 		model.destruction();
 		/*
 		Double moment = model.getMomentum(0);

@@ -142,7 +142,9 @@ public abstract class TestbedTest
   private int score=0;
   private ArrayList<Double> prevTMoment = new ArrayList<Double>(); 
   private ArrayList<Double> prevAMoment = new ArrayList<Double>(); 
-  
+  private ArrayList<Double> prevImpulse = new ArrayList<Double>(); 
+  private ArrayList<Double> prevTorque = new ArrayList<Double>(); 
+  static boolean RESET = false;
   public TestbedTest() {
 	
     inputQueue = new LinkedList<QueueItem>();
@@ -384,6 +386,10 @@ public abstract class TestbedTest
    */
   public void reset() {
     resetPending = true;
+  }
+  
+  public boolean isResetPending() {
+	  return resetPending;
   }
 
   /**
@@ -677,16 +683,7 @@ public abstract class TestbedTest
   
   public void destroyBody() {
 	  boolean des = isRedBirdCont();
-	  fixA = m_world.getContactList().getFixtureA();
-	  CircleShape circle = new CircleShape();
-      circle.m_radius = 2f;
 	  if(des) {
-		  if(fixA.getShape()==circle) {
-			  score+=5000;
-		  }
-		  else {
-			  score+=500;
-		  }
 		  m_world.destroyBody(getBodyA());
 	  }
   }
@@ -729,14 +726,37 @@ public abstract class TestbedTest
 		  else {
 			  Double impulse = Math.abs( Moment- prevTMoment.get(index-1));
 			  Double angImpulse = Math.abs(angMoment- prevAMoment.get(index-1));
-			  
-			  if(impulse+angImpulse>1100 || impulse>600 || angImpulse>600) {
-				  System.out.println("Angular Impulse: " + angImpulse + " Translation Impulse: " + impulse);
-				  m_world.destroyBody(b);
+			  if(Math.abs(Moment)-Math.abs(prevTMoment.get(index-1))<0) {
+				  impulse*=-1;
 			  }
+			  if(Math.abs(angMoment)-Math.abs(prevAMoment.get(index-1))<0) {
+				  angImpulse*=-1;
+			  }
+			  
+
 			  
 			  prevTMoment.set(index-1, Moment);
 			  prevAMoment.set(index-1, angMoment);
+			  if(index-1> prevImpulse.size()-1) {
+				  prevImpulse.add(impulse);
+				  prevTorque.add(angImpulse);
+			  }
+			  else {
+				  //&& (Math.abs(prevImpulse.get(index-1)+impulse)<100)
+				  if((index!=1&&(prevImpulse.get(index-1)+prevTorque.get(index-1)<-1100  || prevTorque.get(index-1)<-600))|| prevImpulse.get(index-1)<-600 || prevImpulse.get(index-1)>600  ) {
+					  System.out.println("Angular Impulse: " + prevImpulse.get(index-1) + " Translation Impulse: " + prevTorque.get(index-1) + "Index: " + index);
+					  if(index==1) {
+						  
+						  score+=5000;
+					  }
+					  else {
+						  score+=500;
+					  }
+					  m_world.destroyBody(b);
+				  }
+				  prevImpulse.set(index-1, impulse);
+				  prevTorque.set(index-1, angImpulse);
+			  }
 		  }
 		  
 	  }

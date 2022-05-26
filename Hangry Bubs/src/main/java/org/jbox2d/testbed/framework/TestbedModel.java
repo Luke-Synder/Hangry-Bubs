@@ -188,6 +188,10 @@ public class TestbedModel {
 	  return test.isRedBirdCont();
   }
   
+  public boolean isResetPending() {
+	  return test.isResetPending();
+  }
+  
   public Body getBB() {
 	  return test.getBodyB();
   }
