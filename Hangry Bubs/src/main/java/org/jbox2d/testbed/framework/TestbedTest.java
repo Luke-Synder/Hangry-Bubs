@@ -145,6 +145,10 @@ public abstract class TestbedTest
   private ArrayList<Double> prevImpulse = new ArrayList<Double>(); 
   private ArrayList<Double> prevTorque = new ArrayList<Double>(); 
   static boolean RESET = false;
+  private double lastMoment;
+  private boolean pigDead=false;
+  private int lives =3;
+  
   public TestbedTest() {
 	
     inputQueue = new LinkedList<QueueItem>();
@@ -637,8 +641,20 @@ public abstract class TestbedTest
   }
   
   
-  
+  public void Destroy() {
+	  if(isRedBirdCont()) {
+			double impulse = getMomentum(0)-lastMoment;
+			System.out.println("Previous Momentum: " + lastMoment + " Momentum: " + getMomentum(0) + " impulse: " + impulse);
+			if(Math.abs(impulse)>400) {	
+				score+=500;
+				model.destroyBody();
+			}
+	  }
+  }
 
+  public int getLives() {
+	  return lives;
+  }
   
   
   public Body getRedBirdBody()
@@ -745,8 +761,8 @@ public abstract class TestbedTest
 				  //&& (Math.abs(prevImpulse.get(index-1)+impulse)<100)
 				  if((index!=1&&(prevImpulse.get(index-1)+prevTorque.get(index-1)<-1100  || prevTorque.get(index-1)<-600))|| prevImpulse.get(index-1)<-600 || prevImpulse.get(index-1)>600  ) {
 					  System.out.println("Angular Impulse: " + prevImpulse.get(index-1) + " Translation Impulse: " + prevTorque.get(index-1) + "Index: " + index);
-					  if(index==1) {
-						  
+					  if(index==1&& !pigDead) {
+						  pigDead=true;
 						  score+=5000;
 					  }
 					  else {
@@ -760,6 +776,10 @@ public abstract class TestbedTest
 		  }
 		  
 	  }
+  }
+  
+  public boolean pigsDead() {
+	  return pigDead;
   }
   
   
@@ -981,8 +1001,10 @@ public abstract class TestbedTest
       mouseJoint = null;
     }
 
-    if (bombSpawning) {
+    if (bombSpawning && lives>0) {
+      lives-=1;
       completeBombSpawn(p);
+      
     }
   }
 
@@ -1117,6 +1139,8 @@ public abstract class TestbedTest
     launchBomb(bombSpawnPoint, vel);
     bombSpawning = false;
   }
+  
+  
 
   /**
    * Override to enable saving and loading. Remember to also override the {@link ObjectListener} and

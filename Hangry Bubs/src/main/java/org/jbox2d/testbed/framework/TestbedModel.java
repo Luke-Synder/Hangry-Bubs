@@ -188,6 +188,15 @@ public class TestbedModel {
 	  return test.isRedBirdCont();
   }
   
+  public void destroy() {
+	  test.Destroy();
+  }
+  public boolean pigsDead() {
+	  return test.pigsDead();
+  }
+  public int getLives() {
+	  return test.getLives();
+  }
   public boolean isResetPending() {
 	  return test.isResetPending();
   }

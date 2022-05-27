@@ -54,6 +54,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedPanel;
 import org.jbox2d.testbed.framework.TestbedTest;
+import org.jbox2d.testbed.tests.Background;
 import org.jbox2d.testbed.tests.DominoTest;
 import org.jbox2d.testbed.tests.MediumWoodBlock;
 import org.jbox2d.testbed.tests.Pig;
@@ -259,7 +260,22 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
     dbg.fillRect(0, 0, panelWidth, panelHeight);
     //dbg.setColor(Color.blue);
     //dbg.fillOval(30, 30, 30, 30);
-
+    Background bg = new Background(0,-310);
+    bg.paint(dbg);
+    RedBird rb;
+    if(model.getLives()>=3) {
+    	rb = new RedBird(10,590);
+    	rb.paint(dbg);
+    }
+    if(model.getLives()>=2) {
+		rb = new RedBird(60,590);
+		rb.paint(dbg);
+    }
+    if(model.getLives()>=1) {
+		rb = new RedBird(110,590);
+		rb.paint(dbg);
+    }
+    
 	if(DominoTest.AngryBirdsMapIsLoaded) {
 		if(model.bodySize()>30) {
 			IND=1;
@@ -276,12 +292,17 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 	    dbg.drawString(score , 1500, 10);
 	    if(IND!=0) {
 	    	double[] xya = model.getXYA(IND-1);
-	    	RedBird rb = new RedBird((int) xya[0],(int) xya[1]);
+	    	rb = new RedBird((int) xya[0],(int) xya[1]);
 	    	rb.paint(dbg);
 	    }
 		double[] xyaB = model.getXYA(IND);
-		Pig kingPig = new Pig((int) xyaB[0],(int) xyaB[1]);
-		kingPig.paint(dbg,xyaB[2]);
+		if(!model.pigsDead()) {
+			Pig kingPig = new Pig((int) xyaB[0],(int) xyaB[1]);
+			kingPig.paint(dbg,xyaB[2]);
+		}else {
+			MediumWoodBlock mwb = new MediumWoodBlock((int) xyaB[0],(int) xyaB[1]+7);
+			mwb.paint(dbg,xyaB[2]);
+		}
 		xyaB = model.getXYA(IND+1);
 		MediumWoodBlock mwb = new MediumWoodBlock((int) xyaB[0],(int) xyaB[1]+7);
 		mwb.paint(dbg,xyaB[2]);
@@ -293,6 +314,8 @@ public class TestPanelJ2D extends JPanel implements TestbedPanel {
 		}
 		//dbg.fillOval((int) xyaB[0],(int) xyaB[1]+7, 5, 5);
 		model.destruction();
+		model.destroy();
+		
 		/*
 		Double moment = model.getMomentum(0);
 		if(model.isCont()) {
