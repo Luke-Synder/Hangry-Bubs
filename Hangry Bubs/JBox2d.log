@@ -701,3 +701,6 @@
 2022-05-31 08:21:19,619 [main] DEBUG org.jbox2d.testbed.framework.j2d.TestPanelJ2D.render(TestPanelJ2D.java:237) - dbImage is null, creating a new one
 2022-05-31 08:21:19,620 [main] ERROR org.jbox2d.testbed.framework.j2d.TestPanelJ2D.render(TestPanelJ2D.java:243) - dbImage is still null, ignoring render call
 2022-05-31 08:21:19,835 [Testbed] DEBUG org.jbox2d.testbed.framework.j2d.TestPanelJ2D.render(TestPanelJ2D.java:237) - dbImage is null, creating a new one
+2022-05-31 08:24:04,671 [main] DEBUG org.jbox2d.testbed.framework.j2d.TestPanelJ2D.render(TestPanelJ2D.java:237) - dbImage is null, creating a new one
+2022-05-31 08:24:04,673 [main] ERROR org.jbox2d.testbed.framework.j2d.TestPanelJ2D.render(TestPanelJ2D.java:243) - dbImage is still null, ignoring render call
+2022-05-31 08:24:04,870 [Testbed] DEBUG org.jbox2d.testbed.framework.j2d.TestPanelJ2D.render(TestPanelJ2D.java:237) - dbImage is null, creating a new one

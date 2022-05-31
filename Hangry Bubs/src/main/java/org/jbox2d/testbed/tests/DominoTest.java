@@ -131,7 +131,7 @@ public class DominoTest extends TestbedTest  {
      * 500 for each wood broken
      */
 
-        float thickness =2f;
+        float thickness =.3f;
     	for(float j=8; j<=24; j+=8) {
 	    	for(float i=-24+j;i<=24-(j);i+=8) {
 	    		box(4.0f,4.0f,thickness,i*1.021f,(j-8)+(((j-8)/3)*(thickness+.1f)));
