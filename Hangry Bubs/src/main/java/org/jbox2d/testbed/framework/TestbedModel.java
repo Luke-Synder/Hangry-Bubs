@@ -200,13 +200,19 @@ public class TestbedModel {
   public boolean isResetPending() {
 	  return test.isResetPending();
   }
-  
+  public int getIND() {
+	  return test.getIND();
+  }
   public Body getBB() {
 	  return test.getBodyB();
   }
   
   public void destroyBody(){
 	  test.destroyBody();
+  }
+  
+  public int getNumPigs() {
+	  return test.numPig();
   }
   
   public double getMomentum(int index) {
